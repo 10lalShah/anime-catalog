@@ -1,13 +1,19 @@
 import React from 'react'
 import { SafeAreaView, StatusBar } from 'react-native'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
-import { StartupContainer } from '@/Containers'
+import {
+  FavouriteContainer,
+  ListContainer,
+  StartupContainer,
+} from '@/Containers'
 import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
 
 const Stack = createStackNavigator()
+const Drawer = createDrawerNavigator()
 
 // @refresh reset
 const ApplicationNavigator = () => {
@@ -18,16 +24,11 @@ const ApplicationNavigator = () => {
     <SafeAreaView style={[Layout.fill, { backgroundColor: colors.card }]}>
       <NavigationContainer theme={NavigationTheme} ref={navigationRef}>
         <StatusBar barStyle={darkMode ? 'light-content' : 'dark-content'} />
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Startup" component={StartupContainer} />
-          <Stack.Screen
-            name="Main"
-            component={MainNavigator}
-            options={{
-              animationEnabled: false,
-            }}
-          />
-        </Stack.Navigator>
+        <Stack.Screen name="Startup" component={StartupContainer} />
+        <Drawer.Navigator screenOptions={{ headerShown: true }}>
+          <Drawer.Screen name="List" component={MainNavigator} />
+          <Drawer.Screen name="Favourite" component={FavouriteContainer} />
+        </Drawer.Navigator>
       </NavigationContainer>
     </SafeAreaView>
   )
