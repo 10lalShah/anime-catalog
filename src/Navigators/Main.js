@@ -2,13 +2,12 @@ import React from 'react'
 import { View, SafeAreaView } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { ExampleContainer, ListContainer } from '@/Containers'
-import { BottomNavigation, BottomNavigationTab } from '@ui-kitten/components'
+import { BottomNavigation, BottomNavigationTab, Icon } from '@ui-kitten/components'
 
-import { Icon } from 'react-native-eva-icons'
 
-const AiringIcon = style => <Icon {...style} name="search" />
-const CompleteIcon = style => <Icon {...style} name="map" />
-const UpcomingIcon = style => <Icon {...style} name="inbox" />
+const AiringIcon = style => <Icon {...style} name="film-outline" />
+const CompleteIcon = style => <Icon {...style} name="flag" />
+const UpcomingIcon = style => <Icon {...style} name="calendar-outline" />
 
 const Tab = createBottomTabNavigator()
 

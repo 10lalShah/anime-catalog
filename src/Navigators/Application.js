@@ -34,8 +34,16 @@ const DrawerContent = ({ navigation, state }) => (
 
 export const DrawerNavigator = () => (
   <Navigator drawerContent={props => <DrawerContent {...props} />}>
-    <Screen name="Users" component={MainNavigator} />
-    <Screen name="Orders" component={FavouriteContainer} />
+    <Screen
+      name="Home"
+      component={MainNavigator}
+      options={{ headerShown: false }}
+    />
+    <Screen
+      name="Favourite"
+      component={FavouriteContainer}
+      options={{ headerShown: false }}
+    />
   </Navigator>
 )
 

@@ -1,10 +1,16 @@
-import { View, FlatList } from 'react-native'
+import { View, FlatList, TouchableWithoutFeedback } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import AnimeCard from '@/Components/AnimeCard'
 import { Spinner } from '@ui-kitten/components'
-import { Icon, Input, Text } from '@ui-kitten/components'
+import {
+  Icon,
+  Input,
+  TopNavigation,
+  TopNavigationAction,
+} from '@ui-kitten/components'
 import { useDebounce } from '@/Hooks'
+import { scale } from 'react-native-size-matters'
 
 const ListContainer = ({ navigation }) => {
   const { index, routeNames } = navigation.getState()
@@ -42,7 +48,6 @@ const ListContainer = ({ navigation }) => {
     }
   }
 
-
   const renderAnimeList = ({ item }) => {
     const { score, year, title, images, rating } = item
     return (
@@ -55,14 +60,32 @@ const ListContainer = ({ navigation }) => {
       />
     )
   }
-  const renderIcon = props => <Icon {...props} name={'search'} />
+  const renderIconLeft = props => <Icon {...props} name={'search'} />
+  const renderIconRight = props => (
+    <TouchableWithoutFeedback onPress={() => setSearchText('')}>
+      <Icon {...props} name={'close-outline'} />
+    </TouchableWithoutFeedback>
+  )
+
+  const BackIcon = props => <Icon {...props} name="menu-outline" />
+
+  const BackAction = () => (
+    <TopNavigationAction
+      icon={BackIcon}
+      onPress={() => navigation.toggleDrawer()}
+    />
+  )
+
   return (
     <View>
-      <View style={{ marginHorizontal: 5, marginVertical: 10 }}>
+      <TopNavigation accessoryLeft={BackAction} title="Look for Anime" />
+      <View style={{ marginHorizontal: scale(10), marginVertical: 10 }}>
         <Input
           value={searchText}
           placeholder="Search Anime"
-          accessoryLeft={renderIcon}
+          accessoryLeft={renderIconLeft}
+          accessoryRight={renderIconRight}
+          size="large"
           onChangeText={nextValue => setSearchText(nextValue)}
         />
       </View>
