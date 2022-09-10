@@ -1,13 +1,37 @@
 import React from 'react'
+import { View, SafeAreaView } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { ExampleContainer, ListContainer } from '@/Containers'
+import { BottomNavigation, BottomNavigationTab } from '@ui-kitten/components'
+
+import { Icon } from 'react-native-eva-icons'
+
+const AiringIcon = style => <Icon {...style} name="search" />
+const CompleteIcon = style => <Icon {...style} name="map" />
+const UpcomingIcon = style => <Icon {...style} name="inbox" />
 
 const Tab = createBottomTabNavigator()
+
+const BottomTabBar = ({ navigation, state }) => {
+  const onSelect = index => {
+    navigation.navigate(state.routeNames[index])
+  }
+
+  return (
+    <SafeAreaView>
+      <BottomNavigation selectedIndex={state.index} onSelect={onSelect}>
+        <BottomNavigationTab title="Airing" icon={AiringIcon} />
+        <BottomNavigationTab title="Complete" icon={CompleteIcon} />
+        <BottomNavigationTab title="Upcoming" icon={UpcomingIcon} />
+      </BottomNavigation>
+    </SafeAreaView>
+  )
+}
 
 // @refresh reset
 const MainNavigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator tabBar={props => <BottomTabBar {...props} />}>
       <Tab.Screen
         name="Airing"
         component={ListContainer}
