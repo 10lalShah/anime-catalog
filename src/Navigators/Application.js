@@ -3,22 +3,15 @@ import { SafeAreaView, StatusBar } from 'react-native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
-import {
-  Drawer,
-  DrawerItem,
-  IndexPath,
-} from '@ui-kitten/components'
+import { Drawer, DrawerItem, IndexPath } from '@ui-kitten/components'
 
-import {
-  DetailContainer,
-  FavouriteContainer,
-} from '@/Containers'
+import { DetailContainer, FavouriteContainer } from '@/Containers'
 import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
 
 const Stack = createStackNavigator()
-const { Navigator, Screen } = createDrawerNavigator()
+const MainDrawer = createDrawerNavigator()
 
 const MainStack = () => {
   return (
@@ -40,21 +33,20 @@ const DrawerContent = ({ navigation, state }) => (
 )
 
 export const DrawerNavigator = () => (
-  <Navigator drawerContent={props => <DrawerContent {...props} />}>
-    <Screen
+  <MainDrawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
+    <MainDrawer.Screen
       name="Home"
       component={MainNavigator}
       options={{ headerShown: false }}
     />
-    <Screen
+    <MainDrawer.Screen
       name="Favourite"
       component={FavouriteContainer}
       options={{ headerShown: false }}
     />
-  </Navigator>
+  </MainDrawer.Navigator>
 )
 
-// @refresh reset
 const ApplicationNavigator = () => {
   const { Layout, darkMode, NavigationTheme } = useTheme()
   const { colors } = NavigationTheme
