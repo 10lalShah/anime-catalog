@@ -78,7 +78,7 @@ const ListContainer = ({ navigation }) => {
 
   return (
     <View>
-      <TopNavigation accessoryLeft={BackAction} title="Look for Anime" />
+      <TopNavigation accessoryLeft={BackAction} title="Search Anime" />
       <View style={{ marginHorizontal: scale(10), marginVertical: 10 }}>
         <Input
           value={searchText}

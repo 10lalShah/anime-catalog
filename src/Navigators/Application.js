@@ -6,28 +6,35 @@ import { NavigationContainer } from '@react-navigation/native'
 import {
   Drawer,
   DrawerItem,
-  Layout,
-  Text,
   IndexPath,
 } from '@ui-kitten/components'
 
 import {
+  DetailContainer,
   FavouriteContainer,
-  ListContainer,
-  StartupContainer,
 } from '@/Containers'
 import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
 
+const Stack = createStackNavigator()
 const { Navigator, Screen } = createDrawerNavigator()
+
+const MainStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="MainDrawer" component={DrawerNavigator} />
+      <Stack.Screen name="DetailScreen" component={DetailContainer} />
+    </Stack.Navigator>
+  )
+}
 
 const DrawerContent = ({ navigation, state }) => (
   <Drawer
     selectedIndex={new IndexPath(state.index)}
     onSelect={index => navigation.navigate(state.routeNames[index.row])}
   >
-    <DrawerItem title="Main" />
+    <DrawerItem title="Search" />
     <DrawerItem title="Favourites" />
   </Drawer>
 )
@@ -56,8 +63,7 @@ const ApplicationNavigator = () => {
     <SafeAreaView style={[Layout.fill, { backgroundColor: colors.card }]}>
       <NavigationContainer theme={NavigationTheme} ref={navigationRef}>
         <StatusBar barStyle={darkMode ? 'light-content' : 'dark-content'} />
-        {/* <Stack.Screen name="Startup" component={StartupContainer} /> */}
-        <DrawerNavigator />
+        <MainStack />
       </NavigationContainer>
     </SafeAreaView>
   )

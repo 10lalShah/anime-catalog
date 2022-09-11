@@ -2,10 +2,15 @@ import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { Card, Text, Icon } from '@ui-kitten/components'
 import { scale } from 'react-native-size-matters'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native';
 
 const AnimeCard = ({ title, rating, year, score, images }) => {
+  const navigation = useNavigation()
   return (
-    <TouchableOpacity style={[styles.card, styles.shadowProp]}>
+    <TouchableOpacity
+      style={[styles.card, styles.shadowProp]}
+      onPress={() => navigation.navigate('DetailScreen')}
+    >
       <View
         style={{
           flex: 1,
@@ -24,7 +29,11 @@ const AnimeCard = ({ title, rating, year, score, images }) => {
           <Text category="p" numberOfLines={2} ellipsizeMode="tail">
             {title}
           </Text>
-          <Text category="s2" appearance="hint" style={[styles.subTextStyle, {paddingTop: scale(5)}]}>
+          <Text
+            category="s2"
+            appearance="hint"
+            style={[styles.subTextStyle, { paddingTop: scale(5) }]}
+          >
             RATING : {rating}
           </Text>
           <Text category="s2" appearance="hint" style={[styles.subTextStyle]}>
