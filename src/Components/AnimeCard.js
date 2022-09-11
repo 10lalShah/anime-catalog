@@ -1,6 +1,7 @@
 import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import { Card, Text, Icon } from '@ui-kitten/components'
+import { Text } from '@ui-kitten/components'
 import { scale } from 'react-native-size-matters'
+import { ExplicitWarning } from '@/Components'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 
@@ -9,7 +10,15 @@ const AnimeCard = ({ title, rating, year, score, images, showId }) => {
   return (
     <TouchableOpacity
       style={[styles.card, styles.shadowProp]}
-      onPress={() => navigation.navigate('DetailScreen', { showId, title, score, images })}
+      onPress={() =>
+        navigation.navigate('DetailScreen', {
+          showId,
+          title,
+          score,
+          images,
+          rating,
+        })
+      }
     >
       <View
         style={{
@@ -30,18 +39,19 @@ const AnimeCard = ({ title, rating, year, score, images, showId }) => {
             {title}
           </Text>
           <Text
-            category="s2"
+            category="s1"
             appearance="hint"
             style={[styles.subTextStyle, { paddingTop: scale(5) }]}
           >
             RATING : {rating}
           </Text>
-          <Text category="s2" appearance="hint" style={[styles.subTextStyle]}>
+          <Text category="s1" appearance="hint" style={[styles.subTextStyle]}>
             SCORE : {score}
           </Text>
-          <Text category="s2" appearance="hint" style={[styles.subTextStyle]}>
+          <Text category="s1" appearance="hint" style={[styles.subTextStyle]}>
             YEAR : {year || '-'}
           </Text>
+          <View style={{paddingTop: scale(5)}}>{rating === 'R+ - Mild Nudity' && <ExplicitWarning />}</View>
         </View>
       </View>
     </TouchableOpacity>
@@ -71,7 +81,7 @@ const styles = StyleSheet.create({
     flex: 7,
   },
   subTextStyle: {
-    fontSize: scale(9),
+    fontSize: scale(12),
   },
   shadowProp: {
     shadowColor: '#171717',
