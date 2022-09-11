@@ -13,12 +13,20 @@ import {
 import axios from 'axios'
 import { ScrollView } from 'react-native-gesture-handler'
 import { scale } from 'react-native-size-matters'
+import { addToFav, removeFromFav } from '@/Store/Favourites'
+import { useDispatch, useSelector } from 'react-redux'
 
 const WIDTH = Dimensions.get('window').width
 
 const DetailContainer = ({ route, navigation }) => {
   const { showId, title, score, images } = route.params
+  const favourites = useSelector(state => state.favourites)
+  const dispatch = useDispatch()
   const [animeDetail, setAnimeDetail] = useState({})
+
+  const isFavourite = favourites.some(
+    favAnime => favAnime.mal_id === animeDetail.mal_id,
+  )
 
   useEffect(() => {
     const fetchShowDetail = async () => {
@@ -26,7 +34,6 @@ const DetailContainer = ({ route, navigation }) => {
         const { data, status } = await axios.get(
           `https://api.jikan.moe/v4/anime/${showId}/full`,
         )
-        console.log('data ->', data)
         setAnimeDetail(data.data)
       } catch (error) {
         console.log('ERROR:', error)
@@ -35,13 +42,27 @@ const DetailContainer = ({ route, navigation }) => {
     fetchShowDetail()
   }, [showId])
 
+  const manageFavourite = () => {
+    if (isFavourite) {
+      // remove from redux store
+      dispatch(removeFromFav(animeDetail))
+    } else {
+      // add to redux store
+      dispatch(addToFav(animeDetail))
+    }
+  }
+
   const BackIcon = props => <Icon {...props} name="arrow-back" />
-  const HeartIcon = props => <Icon {...props} name="heart-outline" />
+  const HeartIcon = props => (
+    <Icon {...props} name={isFavourite ? 'heart' : 'heart-outline'} f/>
+  )
 
   const renderBackAction = () => (
     <TopNavigationAction icon={BackIcon} onPress={() => navigation.goBack()} />
   )
-  const renderRightAction = () => <TopNavigationAction icon={HeartIcon} />
+  const renderRightAction = () => (
+    <TopNavigationAction icon={HeartIcon} onPress={() => manageFavourite()} />
+  )
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
