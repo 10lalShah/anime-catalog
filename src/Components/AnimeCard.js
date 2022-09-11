@@ -1,8 +1,8 @@
+import React from 'react'
 import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { Text } from '@ui-kitten/components'
 import { scale } from 'react-native-size-matters'
 import { ExplicitWarning } from '@/Components'
-import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 
 const AnimeCard = ({ title, rating, year, score, images, showId }) => {
@@ -20,14 +20,7 @@ const AnimeCard = ({ title, rating, year, score, images, showId }) => {
         })
       }
     >
-      <View
-        style={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-        }}
-      >
+      <View style={[styles.contentContainer]}>
         <View style={[styles.imageContainer]}>
           <Image
             source={{ uri: images.jpg.image_url }}
@@ -43,15 +36,17 @@ const AnimeCard = ({ title, rating, year, score, images, showId }) => {
             appearance="hint"
             style={[styles.subTextStyle, { paddingTop: scale(5) }]}
           >
-            RATING : {rating}
+            RATING : {rating || '-'}
           </Text>
           <Text category="s1" appearance="hint" style={[styles.subTextStyle]}>
-            SCORE : {score}
+            SCORE : {score || '-'}
           </Text>
           <Text category="s1" appearance="hint" style={[styles.subTextStyle]}>
             YEAR : {year || '-'}
           </Text>
-          <View style={{paddingTop: scale(5)}}>{rating === 'R+ - Mild Nudity' && <ExplicitWarning />}</View>
+          <View style={{ paddingTop: scale(5) }}>
+            {rating === 'R+ - Mild Nudity' && <ExplicitWarning />}
+          </View>
         </View>
       </View>
     </TouchableOpacity>
@@ -63,6 +58,12 @@ export default AnimeCard
 const styles = StyleSheet.create({
   imageContainer: {
     flex: 5,
+  },
+  contentContainer: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   imageStyle: {
     height: scale(90),
