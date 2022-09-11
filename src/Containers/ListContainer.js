@@ -49,7 +49,7 @@ const ListContainer = ({ navigation }) => {
   }
 
   const renderAnimeList = ({ item }) => {
-    const { score, year, title, images, rating } = item
+    const { score, year, title, images, rating, mal_id: showId} = item
     return (
       <AnimeCard
         title={title}
@@ -57,6 +57,7 @@ const ListContainer = ({ navigation }) => {
         year={year}
         score={score}
         images={images}
+        showId={showId}
       />
     )
   }

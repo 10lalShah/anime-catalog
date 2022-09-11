@@ -2,14 +2,14 @@ import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { Card, Text, Icon } from '@ui-kitten/components'
 import { scale } from 'react-native-size-matters'
 import React from 'react'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native'
 
-const AnimeCard = ({ title, rating, year, score, images }) => {
+const AnimeCard = ({ title, rating, year, score, images, showId }) => {
   const navigation = useNavigation()
   return (
     <TouchableOpacity
       style={[styles.card, styles.shadowProp]}
-      onPress={() => navigation.navigate('DetailScreen')}
+      onPress={() => navigation.navigate('DetailScreen', { showId, title, score, images })}
     >
       <View
         style={{
@@ -26,7 +26,7 @@ const AnimeCard = ({ title, rating, year, score, images }) => {
           />
         </View>
         <View style={[styles.infoContainer]}>
-          <Text category="p" numberOfLines={2} ellipsizeMode="tail">
+          <Text category="label" numberOfLines={2} ellipsizeMode="tail">
             {title}
           </Text>
           <Text
